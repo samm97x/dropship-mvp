@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dropship Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Dropship MVP Dashboard</h1>
+    <p>WooCommerce + AliExpress automation status</p>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="stat-card">
+        <h2>Orders</h2>
+        <p id="orders-count">Loading...</p>
+      </div>
+      <div class="stat-card">
+        <h2>Last sync</h2>
+        <p id="last-sync">--</p>
+      </div>
+    </section>
+
+    <section>
+      <button id="test-order-btn">Test New Order</button>
+      <h2>Recent Orders</h2>
+      <div id="orders-container" class="orders-grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

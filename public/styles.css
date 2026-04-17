@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f3f6fb;
+  color: #1a202c;
+}
+
+header {
+  padding: 24px;
+  background: #1f2937;
+  color: #f8fafc;
+  text-align: center;
+}
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.stats {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  padding: 20px;
+}
+
+.orders-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.order-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 18px;
+}
+
+.order-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.order-card p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+.tag {
+  display: inline-flex;
+  padding: 4px 10px;
+  background: #eef2ff;
+  color: #4338ca;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+}
