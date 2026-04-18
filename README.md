@@ -27,6 +27,21 @@ A starter backend for automated WooCommerce & AliExpress dropshipping.
 - `GET /api/orders` - returns saved order activity
 - `GET /dashboard` - simple browser dashboard
 
+## Failure Alerts
+You can receive alerts when order processing or WooCommerce status updates fail.
+
+- Discord: set `ALERTS_DISCORD_WEBHOOK_URL`
+- Email (SMTP): set all of these
+   - `ALERTS_FROM_EMAIL`
+   - `ALERTS_TO_EMAIL`
+   - `ALERTS_SMTP_HOST`
+   - `ALERTS_SMTP_PORT`
+   - `ALERTS_SMTP_SECURE` (`true` for SSL port 465, else `false`)
+   - `ALERTS_SMTP_USER`
+   - `ALERTS_SMTP_PASS`
+
+If both Discord and email are configured, both channels are used.
+
 ## Next steps
 - Add a secure database for orders and products
 - Extend `src/aliexpress.js` with real AliExpress API calls
