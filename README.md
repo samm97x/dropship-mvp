@@ -52,6 +52,18 @@ You can receive alerts when order processing or WooCommerce status updates fail.
 
 If both Discord and email are configured, both channels are used.
 
+## Daily Ops Check Script
+Run a one-command pass/fail check for production + WordPress reachability.
+
+- Basic checks:
+   - `npm run ops:check`
+- Full check (includes a test webhook write):
+   - `npm run ops:check:full`
+
+Optional argument for a custom store URL (if ngrok is running elsewhere):
+
+- `powershell -ExecutionPolicy Bypass -File .\scripts\ops-check.ps1 -StoreBase "https://your-ngrok-url.ngrok-free.dev/wordpress"`
+
 ## Next steps
 - Add a secure database for orders and products
 - Extend `src/aliexpress.js` with real AliExpress API calls
