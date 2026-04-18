@@ -7,7 +7,9 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "ops:check": "powershell -ExecutionPolicy Bypass -File ./scripts/ops-check.ps1",
-    "ops:check:full": "powershell -ExecutionPolicy Bypass -File ./scripts/ops-check.ps1 -TestWebhook"
+    "ops:check:full": "powershell -ExecutionPolicy Bypass -File ./scripts/ops-check.ps1 -TestWebhook",
+    "ops:session": "powershell -ExecutionPolicy Bypass -File ./scripts/session-auto.ps1",
+    "ops:session:full": "powershell -ExecutionPolicy Bypass -File ./scripts/session-auto.ps1 -RunFullCheck"
   },
   "dependencies": {
     "axios": "^1.7.0",

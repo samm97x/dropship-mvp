@@ -64,6 +64,21 @@ Optional argument for a custom store URL (if ngrok is running elsewhere):
 
 - `powershell -ExecutionPolicy Bypass -File .\scripts\ops-check.ps1 -StoreBase "https://your-ngrok-url.ngrok-free.dev/wordpress"`
 
+## Session Automation (One Command)
+Start your local stack, ensure ngrok, update WordPress URLs to the current ngrok domain, and run checks.
+
+- Standard session startup:
+   - `npm run ops:session`
+- Startup plus test webhook write:
+   - `npm run ops:session:full`
+
+Optional flags:
+
+- Skip WordPress URL update:
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\session-auto.ps1 -SkipWordPressUrlUpdate`
+- Dry-run preview:
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\session-auto.ps1 -DryRun`
+
 ## Next steps
 - Add a secure database for orders and products
 - Extend `src/aliexpress.js` with real AliExpress API calls
