@@ -1,8 +1,26 @@
 import axios from 'axios';
 import config from './config.js';
 
+function isPlaceholder(value) {
+  if (!value) return true;
+  const normalized = String(value).toLowerCase();
+  return (
+    normalized.includes('your_api_key') ||
+    normalized.includes('your_api_secret') ||
+    normalized.includes('your_shop_id')
+  );
+}
+
 function hasAliCredentials() {
-  return config.aliexpress.baseUrl && config.aliexpress.apiKey;
+  return Boolean(
+    config.aliexpress.baseUrl &&
+      config.aliexpress.apiKey &&
+      config.aliexpress.apiSecret &&
+      config.aliexpress.shopId &&
+      !isPlaceholder(config.aliexpress.apiKey) &&
+      !isPlaceholder(config.aliexpress.apiSecret) &&
+      !isPlaceholder(config.aliexpress.shopId)
+  );
 }
 
 export async function aliExpressApiRequest(path, method = 'GET', data = null) {
@@ -20,6 +38,16 @@ export async function aliExpressApiRequest(path, method = 'GET', data = null) {
 }
 
 export async function createAliExpressOrder(order) {
+  if (config.fulfillment.mode === 'dsers') {
+    return {
+      success: true,
+      mode: 'dsers',
+      supplierOrderId: `dsers-${order.id || Date.now()}`,
+      trackingNumber: null,
+      note: 'Order routed to DSers workflow.'
+    };
+  }
+
   if (!hasAliCredentials()) {
     console.warn('AliExpress credentials missing. Using placeholder fulfillment.');
     return {
@@ -42,11 +70,38 @@ export async function createAliExpressOrder(order) {
     }))
   };
 
-  const response = await aliExpressApiRequest('/orders/create', 'POST', payload);
-  return response.data;
+  try {
+    const response = await aliExpressApiRequest('/orders/create', 'POST', payload);
+    const contentType = (response.headers?.['content-type'] || '').toLowerCase();
+
+    if (contentType.includes('text/html')) {
+      return {
+        success: false,
+        mode: 'aliexpress-unavailable',
+        supplierOrderId: null,
+        trackingNumber: null,
+        note: 'AliExpress returned an HTML maintenance response.'
+      };
+    }
+
+    return response.data;
+  } catch (error) {
+    return {
+      success: false,
+      mode: 'aliexpress-error',
+      supplierOrderId: null,
+      trackingNumber: null,
+      note: `AliExpress request failed: ${error.message}`
+    };
+  }
 }
 
 export async function syncAliExpressInventory() {
+  if (config.fulfillment.mode === 'dsers') {
+    console.log('Fulfillment mode is DSers. Skipping AliExpress inventory sync.');
+    return [];
+  }
+
   if (!hasAliCredentials()) {
     console.warn('AliExpress credentials missing. Skipping inventory sync.');
     return [];

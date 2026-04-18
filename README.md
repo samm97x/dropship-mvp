@@ -13,6 +13,7 @@ A starter backend for automated WooCommerce & AliExpress dropshipping.
 1. Copy `.env.example` to `.env`
 2. Fill in your WooCommerce and AliExpress credentials
 3. Optional but recommended for production: set `DATABASE_URL` (Railway Postgres)
+4. Set `FULFILLMENT_MODE=dsers` if you are using DSers for supplier fulfillment
 3. Install dependencies:
    ```bash
    npm install
@@ -31,6 +32,10 @@ A starter backend for automated WooCommerce & AliExpress dropshipping.
 ## Storage
 - If `DATABASE_URL` is set, orders are stored in Postgres (persistent across deploys).
 - If `DATABASE_URL` is missing, orders are stored in `data/orders.json` (ephemeral in many cloud environments).
+
+## Fulfillment Modes
+- `FULFILLMENT_MODE=dsers` (recommended): does not call AliExpress API and marks fulfillment mode as `dsers`.
+- Any other value: uses AliExpress API integration (if credentials are valid).
 
 ## Failure Alerts
 You can receive alerts when order processing or WooCommerce status updates fail.

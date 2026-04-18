@@ -7,6 +7,9 @@ export default {
   database: {
     url: process.env.DATABASE_URL
   },
+  fulfillment: {
+    mode: (process.env.FULFILLMENT_MODE || 'dsers').toLowerCase()
+  },
   woo: {
     storeUrl: process.env.WOOCOMMERCE_STORE_URL,
     consumerKey: process.env.WOOCOMMERCE_CONSUMER_KEY,
