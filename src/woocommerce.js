@@ -19,11 +19,15 @@ export async function handleWooOrderWebhook(req, res) {
     try {
       const raw = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : JSON.stringify(req.body);
       console.log('Raw webhook body (first 300):', raw.slice(0, 300));
+      if (!raw || !raw.trim()) {
+        return res.status(200).json({ success: true, message: 'Webhook probe received (empty body)' });
+      }
       payload = JSON.parse(raw);
     } catch (parseError) {
       console.error('Failed to parse webhook payload:', parseError.message);
       console.error('Body type:', typeof req.body, 'isBuffer:', Buffer.isBuffer(req.body));
-      return res.status(400).json({ success: false, message: 'Invalid JSON payload', detail: parseError.message });
+      // Some WooCommerce test/ping deliveries may not send JSON payloads.
+      return res.status(200).json({ success: true, message: 'Webhook probe received (non-JSON body)' });
     }
 
     const order = payload.order || payload;
