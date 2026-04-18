@@ -4,6 +4,9 @@ dotenv.config();
 
 export default {
   port: Number(process.env.PORT || 4000),
+  database: {
+    url: process.env.DATABASE_URL
+  },
   woo: {
     storeUrl: process.env.WOOCOMMERCE_STORE_URL,
     consumerKey: process.env.WOOCOMMERCE_CONSUMER_KEY,

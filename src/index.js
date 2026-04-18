@@ -3,7 +3,7 @@ import path from 'path';
 import config from './config.js';
 import { handleWooOrderWebhook } from './woocommerce.js';
 import { startProductSync, startOrderSync } from './automation.js';
-import { getOrders } from './store.js';
+import { getOrders, initStore } from './store.js';
 import { processOrder } from './orderProcessor.js';
 
 const app = express();
@@ -44,11 +44,21 @@ app.get('/dashboard', (req, res) => {
 
 // webhook route already registered above before json middleware
 
-app.listen(config.port, () => {
-  console.log(`Dropship MVP backend listening on http://localhost:${config.port}`);
-  startProductSync();
-  startOrderSync();
-});
+async function startServer() {
+  try {
+    await initStore();
+    app.listen(config.port, () => {
+      console.log(`Dropship MVP backend listening on http://localhost:${config.port}`);
+      startProductSync();
+      startOrderSync();
+    });
+  } catch (error) {
+    console.error('Failed to initialize data store:', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 // Global error handler — must be last
 app.use((err, req, res, next) => {

@@ -12,6 +12,7 @@ A starter backend for automated WooCommerce & AliExpress dropshipping.
 ## Setup
 1. Copy `.env.example` to `.env`
 2. Fill in your WooCommerce and AliExpress credentials
+3. Optional but recommended for production: set `DATABASE_URL` (Railway Postgres)
 3. Install dependencies:
    ```bash
    npm install
@@ -26,6 +27,10 @@ A starter backend for automated WooCommerce & AliExpress dropshipping.
 - `GET /health` - health check
 - `GET /api/orders` - returns saved order activity
 - `GET /dashboard` - simple browser dashboard
+
+## Storage
+- If `DATABASE_URL` is set, orders are stored in Postgres (persistent across deploys).
+- If `DATABASE_URL` is missing, orders are stored in `data/orders.json` (ephemeral in many cloud environments).
 
 ## Failure Alerts
 You can receive alerts when order processing or WooCommerce status updates fail.
